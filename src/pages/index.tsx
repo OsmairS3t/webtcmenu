@@ -5,10 +5,9 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        TC - MENU
-      </div>
+    <main className="min-h-screen">
+      <div className='w-5 h-5 bg-orange-300'><image href='../assets/logotio.png' /></div>
+      <div className="items-center bg-white p-2 text-center font-bold">MENU</div>
     </main>
   )
 }
