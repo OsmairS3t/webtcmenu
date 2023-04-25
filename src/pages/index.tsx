@@ -1,18 +1,81 @@
 import { useState } from 'react';
 import Image from 'next/image'
-import Button from '@/components/button'; '../components/button'
 
 import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
+
+import Card from '@/components/cards/products';
 
 import logo from '../assets/logotipo.png';
 import crepe01 from '../assets/crepe01.jpeg';
 import crepe02 from '../assets/crepe02.jpeg';
 
 export default function Home() {
-  const [value, setValue] = useState(1)
-  function handleChange() {
-    setValue(2)
+  const [category, setCategory] = useState(1)
+  const [valueActive1, setValueActive1] = useState('flex-grow p-2 bg-orange-100 font-bold text-center text-blue-950')
+  const [valueActive2, setValueActive2] = useState('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+  const [valueActive3, setValueActive3] = useState('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+  const [valueActive4, setValueActive4] = useState('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+  const products = [
+    {
+      'category': 1,
+      'id': 1,
+      'image': crepe01,
+      'name': 'Banana + Chocolate',
+      'price': 'R$ 9,99',
+    },
+    {
+      'category': 1,
+      'id': 2,
+      'image': crepe02,
+      'name': 'Frango + Azeitona',
+      'price': 'R$ 11,99',
+    },
+    {
+      'category': 3,
+      'id': 3,
+      'image': crepe01,
+      'name': 'Banana + Chocolate',
+      'price': 'R$ 19,99',
+    },
+    {
+      'category': 1,
+      'id': 4,
+      'image': crepe02,
+      'name': 'Frango + Azeitona',
+      'price': 'R$ 10,99',
+    },
+  ]
+
+  function handleChange(btn: Number) {
+    if (btn === 1) {
+      setCategory(1)
+      setValueActive1('flex-grow p-2 bg-orange-100 font-bold text-center text-blue-950')
+      setValueActive2('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+      setValueActive3('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+      setValueActive4('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+    }
+    if (btn === 2) {
+      setCategory(2)
+      setValueActive1('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+      setValueActive2('flex-grow p-2 bg-orange-100 font-bold text-center text-blue-950')
+      setValueActive3('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+      setValueActive4('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+    }
+    if (btn === 3) {
+      setCategory(3)
+      setValueActive1('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+      setValueActive2('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+      setValueActive3('flex-grow p-2 bg-orange-100 font-bold text-center text-blue-950')
+      setValueActive4('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+    }
+    if (btn === 4) {
+      setCategory(4)
+      setValueActive1('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+      setValueActive2('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+      setValueActive3('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+      setValueActive4('flex-grow p-2 bg-orange-100 font-bold text-center text-blue-950')
+    }
   }
 
   return (
@@ -24,46 +87,21 @@ export default function Home() {
         </div>
 
         <div className='flex justify-between'>
-          <Button 
-            className='flex-grow p-2 bg-orange-100 font-bold text-center text-blue-950' 
-            title='IGUARIAS' 
-            onClick={()=>handleChange} 
-          />
-          <div className='flex-grow p-2 bg-orange-100 font-bold text-center text-blue-950'>CREPES</div>
-          <div className='flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950'>PRATOS</div>
-          <div className='flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950'>SOBREMESAS</div>
-          <div className='flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950'>BEBIDAS</div>
+          <button onClick={() => handleChange(1)} className={valueActive1}>CREPES</button>
+          <button onClick={() => handleChange(2)} className={valueActive2}>PRATOS</button>
+          <button onClick={() => handleChange(3)} className={valueActive3}>SOBREMESAS</button>
+          <button onClick={() => handleChange(4)} className={valueActive4}>BEBIDAS</button>
         </div>
 
-        <div className='flex flex-col mb-2'>
-          <div className='flex justify-between bg-slate-200 mt-2'>
-            <div className='flex flex-grow justify-start items-center mt-1 pl-2 h-20'>
-              <Image src={crepe01} alt='Crepe' className='w-16 h-16 rounded-full' />
-              <div className='ml-4'>
-                <div className='font-bold text-xm text-left'>Banana + Chocolate</div>
-                <div className='font-bold text-xl text-left'>R$ 9,99</div>
-              </div>
+        {products.map(product => {
+          return (
+            product.category === category &&
+            <div className='flex flex-col mb-2' key={product.id}>
+              <Card id={product.id} image={product.image} name={product.name} price={product.price} />
             </div>
-            <div className='flex flex-col justify-center w-24 mr-4'>
-              <div className='bg-blue-500 p-1 h-8 mb-1 text-center font-semibold'>+ Detalhes</div>
-              <div className='bg-green-500 p-1 h-8 mt-1 text-center font-semibold'>Adicionar</div>
-            </div>
-          </div>
+          )
+        })}
 
-          <div className='flex justify-between bg-slate-200 mt-2'>
-            <div className='flex flex-grow justify-start items-center mt-1 pl-2 h-20'>
-              <Image src={crepe02} alt='Crepe' className='w-16 h-16 rounded-full' />
-              <div className='ml-4'>
-                <div className='font-bold text-xm text-left'>Frango + Azeitona</div>
-                <div className='font-bold text-xl text-left'>R$ 9,99</div>
-              </div>
-            </div>
-            <div className='flex flex-col justify-center w-24 mr-4'>
-              <div className='bg-blue-500 p-1 h-8 mb-1 text-center font-semibold'>+ Detalhes</div>
-              <div className='bg-green-500 p-1 h-8 mt-1 text-center font-semibold'>Adicionar</div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div className='flex justify-between items-center bg-orange-300 p-2'>
@@ -72,7 +110,7 @@ export default function Home() {
           <div className='font-bold'>Total: R$ 9,99</div>
         </div>
         <div>
-          <div className='bg-blue-500 w-24 text-center font-bold p-2'>Detalhes Pedido</div>
+          <button onClick={() => { }} className='bg-blue-500 w-24 text-center font-bold p-2'>Detalhes Pedido</button>
         </div>
       </div>
     </main>

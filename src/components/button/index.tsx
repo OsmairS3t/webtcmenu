@@ -1,17 +1,17 @@
 import react from 'react'
 
 interface Props {
-  className:  string;
+  className: string;
   title: string;
-  onClick: ()=>{};
+  onClick: () => {};
 }
 
-export default function Button({className, title, onClick}:Props) {
+export default function Button({ className, title, onClick }: Props) {
   return (
-      <Button 
-        className={className}
-        title={title}
-        onClick={onClick}
-      />
+    <Button
+      className={className}
+      title={title}
+      onClick={onClick}
+    />
   )
 }
