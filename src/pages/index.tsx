@@ -1,12 +1,19 @@
+import { useState } from 'react';
 import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import Button from '@/components/button'; '../components/button'
 
+import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
+
 import logo from '../assets/logotipo.png';
 import crepe01 from '../assets/crepe01.jpeg';
 import crepe02 from '../assets/crepe02.jpeg';
 
 export default function Home() {
+  const [value, setValue] = useState(1)
+  function handleChange() {
+    setValue(2)
+  }
 
   return (
     <main className="flex flex-col justify-between min-h-screen bg-orange-100">
@@ -17,6 +24,11 @@ export default function Home() {
         </div>
 
         <div className='flex justify-between'>
+          <Button 
+            className='flex-grow p-2 bg-orange-100 font-bold text-center text-blue-950' 
+            title='IGUARIAS' 
+            onClick={()=>handleChange} 
+          />
           <div className='flex-grow p-2 bg-orange-100 font-bold text-center text-blue-950'>CREPES</div>
           <div className='flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950'>PRATOS</div>
           <div className='flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950'>SOBREMESAS</div>
