@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image'
+import Link from 'next/link';
 
 import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
@@ -23,6 +24,12 @@ export default function Home() {
       'image': crepe01,
       'name': 'Banana + Chocolate',
       'price': 'R$ 9,99',
+      'ingredients': [
+        'Massa do crepe',
+        'Banana',
+        'Doce de leite',
+        'Queijo mussarela'
+      ]
     },
     {
       'category': 1,
@@ -30,6 +37,12 @@ export default function Home() {
       'image': crepe02,
       'name': 'Frango + Azeitona',
       'price': 'R$ 11,99',
+      'ingredients': [
+        'Massa do crepe',
+        'Frango',
+        'Azeitona',
+        'Queijo mussarela'
+      ]
     },
     {
       'category': 3,
@@ -37,6 +50,12 @@ export default function Home() {
       'image': crepe01,
       'name': 'Banana + Chocolate',
       'price': 'R$ 19,99',
+      'ingredients': [
+        'Massa do crepe',
+        'Banana',
+        'Doce de leite',
+        'Queijo mussarela'
+      ]
     },
     {
       'category': 1,
@@ -44,6 +63,12 @@ export default function Home() {
       'image': crepe02,
       'name': 'Frango + Azeitona',
       'price': 'R$ 10,99',
+      'ingredients': [
+        'Massa do crepe',
+        'Frango',
+        'Azeitona',
+        'Queijo mussarela'
+      ]
     },
   ]
 
@@ -110,7 +135,11 @@ export default function Home() {
           <div className='font-bold'>Total: R$ 9,99</div>
         </div>
         <div>
-          <button onClick={() => { }} className='bg-blue-500 w-24 text-center font-bold p-2'>Detalhes Pedido</button>
+          <Link href={`/order/1`}>
+            <button onClick={() => { }} className='bg-blue-500 w-24 text-center font-bold p-2'>
+              Detalhes Pedido
+            </button>
+          </Link>
         </div>
       </div>
     </main>

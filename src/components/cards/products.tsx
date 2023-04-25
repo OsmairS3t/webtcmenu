@@ -1,5 +1,6 @@
 import React from "react";
 import Image, { StaticImageData } from 'next/image'
+import Link from "next/link";
 
 interface CardProps {
     id: number;
@@ -19,8 +20,12 @@ export default function Card({ id, image, name, price }: CardProps) {
                 </div>
             </div>
             <div className='flex flex-col justify-center w-24 mr-4'>
-                <button onClick={() => { }} className='bg-blue-500 p-1 h-8 mb-1 text-center font-semibold'>+ Detalhes</button>
-                <button onClick={() => { }} className='bg-green-500 p-1 h-8 mt-1 text-center font-semibold'>Adicionar</button>
+                <Link href={`../../product/${id}`} className='bg-blue-500 p-1 h-8 mb-1 text-center font-semibold'>
+                    <button onClick={() => { }}>+ Detalhes</button>
+                </Link>
+                <Link href={`../../order/add/${id}`} className='bg-green-500 p-1 h-8 mt-1 text-center font-semibold'>
+                    <button onClick={() => { }}>Adicionar</button>
+                </Link>
             </div>
         </div>
     )
