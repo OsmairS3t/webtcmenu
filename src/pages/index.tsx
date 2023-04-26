@@ -137,7 +137,7 @@ export default function Home() {
         <div>
           <Link href={`/order/1`}>
             <button onClick={() => { }} className='bg-blue-500 w-24 text-center font-bold p-2'>
-              Detalhes Pedido
+              DETALHES PEDIDO
             </button>
           </Link>
         </div>
