@@ -1,23 +1,29 @@
 import React from "react";
 import Image, { StaticImageData } from 'next/image'
 import Link from "next/link";
+import crepe01 from '../../assets/crepe01.jpeg';
 
 interface CardProps {
     id: number;
     image: StaticImageData;
     name: string;
-    price: string;
+    price: number;
 }
 
 export default function Card({ id, image, name, price }: CardProps) {
     return (
-        <div className='flex justify-between bg-slate-200 mt-2'>
+        <div className='flex justify-between bg-white'>
             <Link href={`../../product/${id}`}>
                 <div className='flex flex-grow justify-start items-center mt-1 pl-2 h-20'>
-                    <Image src={image} alt='Crepe' width={64} height={64} className='w-16 h-16 rounded-full' />
+                    <Image src={crepe01} alt='Crepe' width={64} height={64} className='w-16 h-16 rounded-full' />
                     <div className='ml-4'>
-                        <div className='font-bold text-xm text-left'>{name}</div>
-                        <div className='font-bold text-xl text-left'>{price}</div>
+                        <div className='font-semibold text-xm text-left'>{name}</div>
+                        <div className='font-bold text-xl text-left'>
+                            {Intl.NumberFormat('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL'
+                            }).format(price)}
+                        </div>
                     </div>
                 </div>
             </Link>
