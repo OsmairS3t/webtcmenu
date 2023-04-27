@@ -1,8 +1,9 @@
 //import { NextApiRequest, NextApiResponse } from "next";
-
 //https://products.aspose.app/cells/pt/conversion
-
 //export default function Products(request: NextApiRequest, response: NextApiResponse) {
+//return response.json(products)
+//}
+
 export const products = [
     {
         "category_id": 1,
@@ -876,6 +877,4 @@ export const products = [
     }
 ]
 
-    //return response.json(products)
-//}
 
