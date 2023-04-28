@@ -1,12 +1,30 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+
+interface Props {
+    id: number,
+    order: number,
+    place: string,
+    cliente: string,
+    product_id: number,
+    amount: number,
+    price: number,
+}
 
 export default function Order() {
+    const [orders, setOrders] = useState<Props[]>([])
+    const [products, setProducts] = useState<[]>([]);
     const { query } = useRouter()
 
+    useEffect(() => {
+        const data: Props[] = orders.filter(order => order.order === Number(query.id))
+        setOrders(data)
+    }, [])
+
     return (
-        <div className='flex justify-center w-screen h-screen bg-white border-gray-500'>
-            <div className='flex flex-col justify-start items-center w-96 h-full border-2 p-5'>
+        <div className='flex justify-center items-center w-screen h-screen bg-white border-gray-500'>
+            <div className='flex flex-col justify-around items-center w-96 h-2/3 border-2 p-5'>
                 <div className='text-blue-950 font-bold text-2xl mt-5 mb-3'>Detalhes do pedido</div>
                 <div className='mt-2 border-b border-gray-500'>
                     <h2 className='font-bold'>CREPES:</h2>

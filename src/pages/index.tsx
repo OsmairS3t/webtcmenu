@@ -10,7 +10,7 @@ import Card from '@/components/cards/products';
 import logo from '../assets/logotipo.png';
 import crepe01 from '../assets/crepe01.jpeg';
 import crepe02 from '../assets/crepe02.jpeg';
-import { products } from './api/products';
+import { products } from './api/data';
 
 export default function Home() {
   const [category, setCategory] = useState(1)
@@ -53,7 +53,7 @@ export default function Home() {
   return (
     <main className="flex flex-col justify-start">
       <section>
-        <div className='flex items-center justify-start flex-wrap bg-orange-300 h-15 p-2 border-b-2 border-orange-500'>
+        <div className='flex items-center justify-start flex-wrap bg-orange-300 p-2 border-b-2 border-orange-500'>
           <div><Image src={logo} height={70} width={70} alt='' /></div>
           <div className="flex-grow font-bold text-center text-red-700 text-4xl font-irish">MENU</div>
         </div>
@@ -66,7 +66,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className='mb-1 overflow-y-scroll h-96'>
+      <section className='mb-1 overflow-y-auto'>
         {products.map(product => {
           return (
             product.category_id === category &&
@@ -90,7 +90,7 @@ export default function Home() {
           </div>
           <div>
             <Link href={`/order/1`}>
-              <button onClick={() => { }} className='bg-blue-500 w-24 text-center font-bold p-2'>
+              <button className='bg-blue-500 w-24 text-center font-bold p-2'>
                 DETALHES PEDIDO
               </button>
             </Link>

@@ -877,4 +877,51 @@ export const products = [
     }
 ]
 
+export const orders = [
+    {
+        "id": 1,
+        "order": 1,
+        "place": 2,
+        "cliente": "Osmair",
+        "product_id": 1,
+        "amount": 2,
+        "price": 36
+    },
+    {
+        "id": 2,
+        "order": 1,
+        "place": 2,
+        "cliente": "Osmair",
+        "product_id": 20,
+        "amount": 1,
+        "price": 18.9
+    },
+    {
+        "id": 3,
+        "order": 1,
+        "place": 2,
+        "cliente": "Osmair",
+        "product_id": 42,
+        "amount": 2,
+        "price": 20.19
+    },
+    {
+        "id": 4,
+        "order": 1,
+        "place": 2,
+        "cliente": "Osmair",
+        "product_id": 44,
+        "amount": 1,
+        "price": 6
+    },
+    {
+        "id": 5,
+        "order": 1,
+        "place": 2,
+        "cliente": "Osmair",
+        "product_id": 47,
+        "amount": 1,
+        "price": 9
+    }
+]
 
