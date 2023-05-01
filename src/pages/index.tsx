@@ -7,13 +7,12 @@ const inter = Inter({ subsets: ['latin'] })
 
 import Card from '@/components/cards/products';
 
-import logo from '../assets/logotipo.png';
-import crepe01 from '../assets/crepe01.jpeg';
-import crepe02 from '../assets/crepe02.jpeg';
 import { products } from './api/data';
 
 export default function Home() {
   const [category, setCategory] = useState(1)
+  const [amount, setAmount] = useState(0)
+  const [priceAmount, setPriceAmount] = useState(0)
   const [valueActive1, setValueActive1] = useState('flex-grow p-2 bg-orange-100 font-bold text-center text-blue-950')
   const [valueActive2, setValueActive2] = useState('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
   const [valueActive3, setValueActive3] = useState('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
@@ -51,10 +50,17 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col justify-start">
+    <main className="flex flex-col justify-start text-blue-950">
       <section>
-        <div className='flex items-center justify-start flex-wrap bg-orange-300 p-2 border-b-2 border-orange-500'>
-          <div><Image src={logo} height={70} width={70} alt='' /></div>
+        <div className='flex 
+            items-center 
+            justify-start 
+            flex-wrap 
+            bg-orange-300 
+            p-2 
+            border-b-2 
+            border-orange-500'>
+          <div><Image src={'/assets/logotipo.png'} height={70} width={70} alt='Tio do Crepe' /></div>
           <div className="flex-grow font-bold text-center text-red-700 text-4xl font-irish">MENU</div>
         </div>
 
@@ -70,12 +76,14 @@ export default function Home() {
         {products.map(product => {
           return (
             product.category_id === category &&
-            <div className='flex flex-col' key={product.product_id}>
-              <Card
-                id={product.product_id}
-                image={crepe01}
-                name={product.product_name}
-                price={product.price}
+            <div className='flex flex-col' key={product.id}>
+              <Card 
+                key={product.id}
+                product={product}
+                amount={amount}
+                setAmount={setAmount}
+                priceAmount={priceAmount} 
+                setPriceAmount={setPriceAmount}
               />
             </div>
           )
@@ -85,12 +93,17 @@ export default function Home() {
       <section>
         <div className='flex justify-between items-center bg-orange-300 p-2 border-t-2 border-orange-500'>
           <div className='flex flex-col flex-grow'>
-            <div className='font-bold'>Itens: 9</div>
-            <div className='font-bold'>Total: R$ 9,99</div>
+            <div className='font-bold'>Itens: {amount}</div>
+            <div className='font-bold'>
+              Total: {Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+              }).format(priceAmount)}
+            </div>
           </div>
           <div>
             <Link href={`/order/1`}>
-              <button className='bg-blue-500 w-24 text-center font-bold p-2'>
+              <button className='bg-blue-500 w-24 p-2 mr-2 text-center font-bold'>
                 DETALHES PEDIDO
               </button>
             </Link>

@@ -1,34 +1,52 @@
-import React from "react";
-import Image, { StaticImageData } from 'next/image'
+import React, { useState } from "react";
+import Image from 'next/image'
 import Link from "next/link";
-import crepe01 from '../../assets/crepe01.jpeg';
+import { IProduct } from "@/pages/api/interface";
 
 interface CardProps {
-    id: number;
-    image: StaticImageData;
-    name: string;
-    price: number;
+    product: IProduct;
+    amount: number;
+    setAmount: Function;
+    priceAmount: number;
+    setPriceAmount: Function;
 }
 
-export default function Card({ id, image, name, price }: CardProps) {
+export default function Card({ product, amount, setAmount, priceAmount, setPriceAmount }: CardProps) {
+
+    function handleAmountPrice(price: number) {
+        setAmount(amount + 1);
+        setPriceAmount(priceAmount + price);
+    }
+
     return (
-        <div className='bg-orange-100 border-orange-200 border-b-2'>
-            <Link href={`../../product/${id}`} className='flex justify-between w-full hover:bg-white'>
-                <div className='flex flex-grow justify-start items-center mt-1 pl-2 h-20'>
-                    <Image src={crepe01} alt='Crepe' width={64} height={64} className='w-16 h-16 rounded-full' />
+        <div className='flex justify-between items-center bg-orange-100 border-orange-200 border-b-2'>
+            <Link href={`../../product/${product.id}`} className='flex justify-between w-full hover:bg-white'>
+                <div className='flex flex-grow items-center mt-1 pl-2 h-20'>
+                    <Image src={product.image} alt='Crepe' width={64} height={64} className='w-16 h-16 rounded-full' />
                     <div className='ml-4'>
-                        <div className='font-semibold text-xm text-left'>{name}</div>
+                        <div className='font-semibold text-xm text-left'>{product.name}</div>
                         <div className='font-bold text-xl text-left'>
                             {Intl.NumberFormat('pt-BR', {
                                 style: 'currency',
                                 currency: 'BRL'
-                            }).format(price)}
+                            }).format(product.price)}
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-col justify-center w-24 mr-4'>
-                    <Link href={`../../order/add/${id}`} className='flex justify-center bg-green-500 p-1 h-16 text-center font-semibold'>
-                        <button onClick={() => { }}>INCLUIR PEDIDO</button>
+                <div>
+                    <Link 
+                        className='flex items-center 
+                            w-24 mt-2 mr-4
+                            bg-green-600 
+                            p-1 h-16 
+                            text-center 
+                            font-semibold 
+                            hover:bg-green-400
+                            hover:border-2
+                            hover:border-green-600'
+                        onClick={() => handleAmountPrice(product.price)}
+                        href='#'>
+                        INCLUIR PEDIDO
                     </Link>
                 </div>
             </Link>

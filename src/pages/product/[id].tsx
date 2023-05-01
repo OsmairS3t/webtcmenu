@@ -1,53 +1,32 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import { products } from '../api/data';
-
-import crepe01 from '../../assets/crepe01.jpeg'
-
-/*
-const product = {
-  'category': 1,
-  'id': 1,
-  'image': crepe01,
-  'name': 'Banana + Chocolate',
-  'price': 'R$ 9,99',
-  'ingredients': [
-    'Massa do crepe',
-    'Banana',
-    'Doce de leite',
-    'Queijo mussarela'
-  ]
-}
-*/
-
-interface ProdProps {
-  category_id: number,
-  category_name: string,
-  product_id: number,
-  product_name: string,
-  price: number,
-  active: string,
-  ingredients: string
-}
+import { IProduct } from "@/pages/api/interface";
 
 export default function Product() {
-  const [product, setProduct] = useState<ProdProps>()
+  const [product, setProduct] = useState<IProduct>()
   const { query } = useRouter()
 
   useEffect(() => {
-    const data = products.find(prod => prod.product_id === Number(query.id))
-    setProduct(data)
-  }, [])
+   const data = products.find(prod => prod.id === Number(query.id))
+   setProduct(data)
+  }, [query])
 
   return (
-    <div className='flex items-center justify-center w-screen h-screen bg-white border-gray-500'>
+    <div className='flex items-center justify-center w-screen h-screen bg-white border-gray-500 text-blue-950'>
       <div className='flex flex-col justify-around items-center w-96 h-2/3 border-2 p-5'>
         <div className='text-blue-950 font-semibold text-2xl mt-5 mb-5'>Detalhes do produto</div>
-        <Image src={crepe01} alt='Crepe' className='w-36 h-36 rounded-full mb-5' />
+        <Image 
+          src={product?.image}
+          width={144} 
+          height={144} 
+          alt='Crepe' 
+          className='rounded-full mb-5' 
+        />
         <div className='font-bold text-lg mb-5'>
-          {product?.product_name}
+          {product?.name}
         </div>
         <div className='font-bold text-blue-950 text-3xl mb-5'>
           {Intl.NumberFormat('pt-BR', {
