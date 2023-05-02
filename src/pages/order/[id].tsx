@@ -23,8 +23,8 @@ export default function Order() {
     }, [])
 
     return (
-        <div className='flex justify-center items-center w-screen h-screen bg-white border-gray-500'>
-            <div className='flex flex-col justify-around items-center w-96 h-2/3 border-2 p-5'>
+        <div className='flex justify-center items-start mt-16 bg-orange-100 border-gray-500'>
+            <div className='flex flex-col justify-around items-center w-96 h-2/3 border-2 border-orange-300 p-5 bg-white'>
                 <div className='text-blue-950 font-bold text-2xl mt-5 mb-3'>Detalhes do pedido</div>
                 <div className='mt-2 border-b border-gray-500'>
                     <h2 className='font-bold'>CREPES:</h2>

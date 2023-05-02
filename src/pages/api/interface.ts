@@ -1,3 +1,4 @@
+
 export interface IProduct {
   category_id: number;
   category_name: string;
@@ -7,6 +8,7 @@ export interface IProduct {
   image: string;
   active: string;
   ingredients: string[];
+  time: string;
 }
 
 export interface IOrder {
@@ -17,5 +19,4 @@ export interface IOrder {
   product_id: number;
   amount: number;
   price: number;
-  //time: string;
 }
