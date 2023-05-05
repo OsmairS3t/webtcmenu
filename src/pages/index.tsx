@@ -1,22 +1,64 @@
-import { useState } from 'react';
-import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import Modal from 'react-modal';
 
 import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 import Card from '@/components/cards/products';
-import { products } from './api/data';
-import { IOrder } from './api/interface';
+import { orders, products } from './api/data';
+import { IOrder, IProduct } from './api/interface';
+import ProductDetail from './product';
+import { isNullishCoalesce } from 'typescript';
+import OrderDetail from './order';
+
+const orderNumber = 1;
 
 export default function Home() {
-  const [category, setCategory] = useState(1)
-  const [amount, setAmount] = useState(0)
-  const [priceAmount, setPriceAmount] = useState(0)
-  const [orderChoosed, setOrderChoosed] = useState<IOrder>();
+  const [category, setCategory] = useState(1);
+  const [countProduct, setCountProduct] = useState(0);
+  const [amount, setAmount] = useState(0);
+  const [priceAmount, setPriceAmount] = useState(0);
   const [valueActive1, setValueActive1] = useState('flex-grow p-2 bg-orange-100 font-bold text-center text-blue-950')
   const [valueActive2, setValueActive2] = useState('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
   const [valueActive3, setValueActive3] = useState('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
   const [valueActive4, setValueActive4] = useState('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
+  const [isModalOpenProduct, setIsModalOpenProduct] = useState(false);
+  const [isModalOpenOrder, setIsModalOpenOrder] = useState(false);
+  const [prod, setProd] = useState<IProduct>({
+    category_id: 0,
+    category_name: '',
+    id: 0,
+    name: '',
+    price: 0,
+    image: '',
+    active: '',
+    ingredients: [],
+    time: ''
+  });
+  const [order, setOrder] = useState<IOrder>({
+    id: 0,
+    order: 0,
+    place: '',
+    cliente: '',
+    products: [{
+      category_id: 0,
+      category_name: '',
+      id: 0,
+      name: '',
+      price: 0,
+      image: '',
+      active: '',
+      ingredients: [],
+      time: ''
+    }],
+    amount: 0,
+    price: 0
+  });
+
+  useEffect(() => {
+    const data = orders.find(item => item.id === orderNumber);
+    setOrder(data);
+  }, [orderNumber])
 
   function handleChange(btn: Number) {
     if (btn === 1) {
@@ -49,6 +91,15 @@ export default function Home() {
     }
   }
 
+  function handleAmountPrice(price: number) {
+    setAmount(amount + 1);
+    setPriceAmount(priceAmount + price);
+  }
+
+  function handleOpenModalOrder() {
+    setIsModalOpenOrder(true);
+  }
+
   return (
     <main className="flex flex-col justify-start text-blue-950">
       <section>
@@ -68,10 +119,10 @@ export default function Home() {
               <Card
                 key={product.id}
                 product={product}
-                amount={amount}
-                setAmount={setAmount}
-                priceAmount={priceAmount}
-                setPriceAmount={setPriceAmount}
+                isOpen={isModalOpenProduct}
+                setOpen={setIsModalOpenProduct}
+                setProd={setProd}
+                setPriceAmount={() => handleAmountPrice(product.price)}
               />
             </div>
           )
@@ -81,23 +132,29 @@ export default function Home() {
       <section>
         <div className='flex justify-between items-center bg-orange-300 p-2 border-t-2 border-orange-500'>
           <div className='flex flex-col flex-grow'>
-            <div className='font-bold'>Itens: {amount}</div>
+            <div className='font-bold'>Itens: {order.amount}</div>
             <div className='font-bold'>
               Total: {Intl.NumberFormat('pt-BR', {
                 style: 'currency',
                 currency: 'BRL'
-              }).format(priceAmount)}
+              }).format(order.price)}
             </div>
           </div>
           <div>
-            <Link href={`/order/1`}>
-              <button className='bg-blue-600 w-32 p-2 text-center font-bold text-white hover:bg-blue-500'>
-                DETALHES PEDIDO
-              </button>
-            </Link>
+            <button onClick={handleOpenModalOrder} className='bg-blue-600 w-32 p-2 text-center font-bold text-white hover:bg-blue-500'>
+              DETALHES PEDIDO
+            </button>
           </div>
         </div>
       </section>
-    </main>
+
+      <Modal isOpen={isModalOpenOrder} className='flex w-screen justify-center items-center'>
+        <OrderDetail ord={order} isOpen={isModalOpenOrder} setModalOpen={setIsModalOpenOrder} />
+      </Modal>
+
+      <Modal isOpen={isModalOpenProduct} className='flex w-screen justify-center items-center mt-24'>
+        <ProductDetail prod={prod} isOpen={isModalOpenProduct} setModalOpen={setIsModalOpenProduct} />
+      </Modal>
+    </main >
   )
 }

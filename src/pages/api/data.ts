@@ -1158,45 +1158,116 @@ export const orders = [
         "order": 1,
         "place": 2,
         "cliente": "Osmair",
-        "product_id": 1,
-        "amount": 2,
-        "price": 36
+        "products": [{
+            "category_id": 1,
+            "category_name": "Crepe",
+            "id": 1,
+            "name": "Amelie",
+            "image": "/assets/crepe01.jpeg",
+            "price": 15,
+            "active": "Sim",
+            "ingredients": ["Massa,Recheio"],
+            "time": "10 min"
+        },
+        {
+            "category_id": 1,
+            "category_name": "Crepe",
+            "id": 2,
+            "name": "Chaumont",
+            "image": "/assets/crepe02.jpeg",
+            "price": 30,
+            "active": "Sim",
+            "ingredients": ["Bouef"],
+            "time": "10 min"
+        },
+        {
+            "category_id": 1,
+            "category_name": "Crepe",
+            "id": 3,
+            "name": "Courbevoie",
+            "image": "/assets/crepe01.jpeg",
+            "price": 30,
+            "active": "Sim",
+            "ingredients": ["Charcuterie"],
+            "time": "10 min"
+        }],
+        "amount": 3,
+        "price": 75
     },
     {
         "id": 2,
-        "order": 1,
+        "order": 2,
         "place": 2,
-        "cliente": "Osmair",
-        "product_id": 20,
+        "cliente": "Wanessa",
+        "products": [
+            {
+                "category_id": 1,
+                "category_name": "Crepe",
+                "id": 8,
+                "name": "Louvre",
+                "image": "/assets/crepe02.jpeg",
+                "price": 25,
+                "active": "Sim",
+                "ingredients": ["Poulet"],
+                "time": "10 min"
+            },
+            {
+                "category_id": 1,
+                "category_name": "Crepe",
+                "id": 9,
+                "name": "Lyon",
+                "image": "/assets/crepe01.jpeg",
+                "price": 33,
+                "active": "Sim",
+                "ingredients": ["Bouef"],
+                "time": "10 min"
+            }
+        ],
         "amount": 1,
         "price": 18.9
     },
     {
         "id": 3,
-        "order": 1,
-        "place": 2,
-        "cliente": "Osmair",
-        "product_id": 42,
+        "order": 3,
+        "place": 3,
+        "cliente": "Moises",
+        "products": [
+            {
+                "category_id": 9,
+                "category_name": "Combo",
+                "id": 100,
+                "name": "Combo Saint Lazare",
+                "image": "/assets/logotipo01.png",
+                "price": 37,
+                "active": "Sim",
+                "ingredients": ["Produto1, produto2"],
+                "time": "10 min"
+            },
+            {
+                "category_id": 9,
+                "category_name": "Combo",
+                "id": 101,
+                "name": "Combo Tour Eiffel",
+                "image": "/assets/logotipo01.png",
+                "price": 48,
+                "active": "Sim",
+                "ingredients": ["Produto1, produto2"],
+                "time": "10 min"
+            },
+            {
+                "category_id": 9,
+                "category_name": "Combo",
+                "id": 102,
+                "name": "Halloween 4 Pessoas",
+                "image": "/assets/logotipo01.png",
+                "price": 272,
+                "active": "Não",
+                "ingredients": ["Produto1, produto2"],
+                "time": "10 min"
+            }
+        ],
         "amount": 2,
         "price": 20.19
     },
-    {
-        "id": 4,
-        "order": 1,
-        "place": 2,
-        "cliente": "Osmair",
-        "product_id": 44,
-        "amount": 1,
-        "price": 6
-    },
-    {
-        "id": 5,
-        "order": 1,
-        "place": 2,
-        "cliente": "Osmair",
-        "product_id": 47,
-        "amount": 1,
-        "price": 9
-    }
 ]
 

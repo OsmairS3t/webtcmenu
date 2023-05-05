@@ -16,7 +16,7 @@ export interface IOrder {
   order: number;
   place: string;
   cliente: string;
-  product_id: number;
+  products: IProduct[];
   amount: number;
   price: number;
 }

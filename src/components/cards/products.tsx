@@ -1,26 +1,26 @@
 import React, { useState } from "react";
 import Image from 'next/image'
 import Link from "next/link";
-import { IOrder, IProduct } from "@/pages/api/interface";
+import { IProduct } from "@/pages/api/interface";
 
 interface CardProps {
     product: IProduct;
-    amount: number;
-    setAmount: Function;
-    priceAmount: number;
-    setPriceAmount: Function;
+    isOpen: boolean;
+    setOpen: Function;
+    setProd: Function;
+    setPriceAmount: (price: number) => void;
 }
 
-export default function Card({ product, amount, setAmount, priceAmount, setPriceAmount }: CardProps) {
-    const [order, setOrder] = useState<IOrder>()
-    function handleAmountPrice(price: number) {
-        setAmount(amount + 1);
-        setPriceAmount(priceAmount + price);
+export default function Card({ product, isOpen, setOpen, setProd, setPriceAmount }: CardProps) {
+
+    function openModal() {
+        setProd(product);
+        setOpen(!isOpen);
     }
 
     return (
         <div className='flex justify-between items-center bg-orange-100 border-orange-200 border-b-2'>
-            <Link href={`../../product/${product.id}`} className='flex justify-between w-full hover:bg-orange-100 hover:bg-gradient-to-r from-white'>
+            <button onClick={openModal} className='flex justify-between w-full hover:bg-orange-100 hover:bg-gradient-to-r from-white'>
                 <div className='flex flex-grow items-center mt-1 pl-2 h-20'>
                     <Image src={product.image} alt='Crepe' width={64} height={64} className='w-16 h-16 rounded-full' />
                     <div className='ml-4'>
@@ -33,9 +33,9 @@ export default function Card({ product, amount, setAmount, priceAmount, setPrice
                         </div>
                     </div>
                 </div>
-            </Link>
+            </button>
             <div className="mr-2">
-                <Link
+                <button
                     className='flex items-center 
                         w-full 
                         h-16 
@@ -50,10 +50,9 @@ export default function Card({ product, amount, setAmount, priceAmount, setPrice
                         hover:bg-green-400
                         hover:border-4
                         hover:border-green-600'
-                    onClick={() => handleAmountPrice(product.price)}
-                    href='#'>
+                    onClick={() => setPriceAmount(product.price)}>
                     ADICIONAR
-                </Link>
+                </button>
             </div>
         </div>
     )

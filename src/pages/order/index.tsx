@@ -1,31 +1,37 @@
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { orders } from '../api/data';
+import { IOrder } from '../api/interface';
 
 interface Props {
-    id: number,
-    order: number,
-    place: string,
-    cliente: string,
-    product_id: number,
-    amount: number,
-    price: number,
+    ord: IOrder;
+    isOpen: boolean;
+    setModalOpen: Function;
 }
 
-export default function Order() {
-    const [orders, setOrders] = useState<Props[]>([])
-    const [products, setProducts] = useState<[]>([]);
-    const { query } = useRouter()
+export default function OrderDetail({ ord, isOpen, setModalOpen }: Props) {
+    const [order, setOrder] = useState<IOrder>(ord);
 
     useEffect(() => {
-        const data: Props[] = orders.filter(order => order.order === Number(query.id))
-        setOrders(data)
-    }, [])
+        const data = orders.find(item => item.id === Number(ord.id))
+        setOrder(data)
+    }, [ord])
+
+    function handleCloseModal() {
+        isOpen ? setModalOpen(false) : setModalOpen(true);
+    }
 
     return (
         <div className='flex justify-center items-start mt-16 bg-orange-100 border-gray-500'>
             <div className='flex flex-col justify-around items-center w-96 h-2/3 border-2 border-orange-300 p-5 bg-white'>
                 <div className='text-blue-950 font-bold text-2xl mt-5 mb-3'>Detalhes do pedido</div>
+                <div className='flex justify-start w-80 p-0.5 space-x-2'>
+                    <h2 className='font-bold'>Nº PEDIDO:</h2>
+                    <span>{order.order}</span>
+                </div>
+                <div className='flex justify-start w-80 p-0.5 space-x-2'>
+                    <h2 className='font-bold'>CLIENTE:</h2>
+                    <span>{order.cliente}</span>
+                </div>
                 <div className='mt-2 border-b border-gray-500'>
                     <h2 className='font-bold'>CREPES:</h2>
                     <div className='font-semibold flex justify-between w-80 p-0.5'>
@@ -84,9 +90,11 @@ export default function Order() {
                     <span>R$ 9,99</span>
                 </div>
 
-                <Link href={`../`} className='bg-blue-950 p-2 w-40 mt-6 font-semibold items-center text-center rounded-xl text-white hover:bg-blue-800'>
-                    <button>Voltar</button>
-                </Link>
+                <button
+                    onClick={handleCloseModal}
+                    className='bg-blue-950 p-2 w-40 mt-6 font-semibold items-center text-center rounded-xl text-white hover:bg-blue-800'>
+                    FECHAR
+                </button>
             </div>
         </div>
     )
