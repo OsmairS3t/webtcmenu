@@ -1267,7 +1267,7 @@ export const orders = [
             }
         ],
         "amount": 2,
-        "price": 20.19
+        "price": 357
     },
 ]
 

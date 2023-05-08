@@ -8,16 +8,12 @@ import Card from '@/components/cards/products';
 import { orders, products } from './api/data';
 import { IOrder, IProduct } from './api/interface';
 import ProductDetail from './product';
-import { isNullishCoalesce } from 'typescript';
 import OrderDetail from './order';
 
-const orderNumber = 1;
+const orderNumber = 3;
 
 export default function Home() {
   const [category, setCategory] = useState(1);
-  const [countProduct, setCountProduct] = useState(0);
-  const [amount, setAmount] = useState(0);
-  const [priceAmount, setPriceAmount] = useState(0);
   const [valueActive1, setValueActive1] = useState('flex-grow p-2 bg-orange-100 font-bold text-center text-blue-950')
   const [valueActive2, setValueActive2] = useState('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
   const [valueActive3, setValueActive3] = useState('flex-grow p-2 bg-orange-300 font-bold text-center text-blue-950')
@@ -57,7 +53,7 @@ export default function Home() {
 
   useEffect(() => {
     const data = orders.find(item => item.id === orderNumber);
-    setOrder(data);
+    setOrder(data)
   }, [orderNumber])
 
   function handleChange(btn: Number) {
@@ -92,8 +88,16 @@ export default function Home() {
   }
 
   function handleAmountPrice(price: number) {
-    setAmount(amount + 1);
-    setPriceAmount(priceAmount + price);
+    const data: IOrder = {
+      id: order.id,
+      amount: order.amount + 1,
+      cliente: order.cliente,
+      place: order.place,
+      order: order.order,
+      price: order.price + price,
+      products: order.products
+    }
+    setOrder(data);
   }
 
   function handleOpenModalOrder() {
@@ -131,13 +135,19 @@ export default function Home() {
 
       <section>
         <div className='flex justify-between items-center bg-orange-300 p-2 border-t-2 border-orange-500'>
-          <div className='flex flex-col flex-grow'>
-            <div className='font-bold'>Itens: {order.amount}</div>
-            <div className='font-bold'>
-              Total: {Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-              }).format(order.price)}
+          <div className='flex justify-start space-x-10'>
+            <div className='flex flex-col flex-grow'>
+              <div className='font-semibold'>CLIENTE: {order.cliente}</div>
+              <div className='font-semibold'>MESA: {order.place}</div>
+            </div>
+            <div className='flex flex-col flex-grow'>
+              <div className='font-semibold'>ITENS: {order.amount}</div>
+              <div className='font-semibold'>
+                TOTAL: {Intl.NumberFormat('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL'
+                }).format(order.price)}
+              </div>
             </div>
           </div>
           <div>
@@ -148,12 +158,18 @@ export default function Home() {
         </div>
       </section>
 
-      <Modal isOpen={isModalOpenOrder} className='flex w-screen justify-center items-center'>
-        <OrderDetail ord={order} isOpen={isModalOpenOrder} setModalOpen={setIsModalOpenOrder} />
+      <Modal isOpen={isModalOpenProduct} className='flex w-screen justify-center items-center mt-24'>
+        <ProductDetail
+          prod={prod}
+          isOpen={isModalOpenProduct}
+          setModalOpen={setIsModalOpenProduct}
+          order={order}
+          setOrder={setOrder}
+        />
       </Modal>
 
-      <Modal isOpen={isModalOpenProduct} className='flex w-screen justify-center items-center mt-24'>
-        <ProductDetail prod={prod} isOpen={isModalOpenProduct} setModalOpen={setIsModalOpenProduct} />
+      <Modal isOpen={isModalOpenOrder} className='flex w-screen justify-center items-center'>
+        <OrderDetail ord={order} isOpen={isModalOpenOrder} setModalOpen={setIsModalOpenOrder} />
       </Modal>
     </main >
   )

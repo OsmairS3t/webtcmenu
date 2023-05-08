@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
-import Link from 'next/link';
 import { products } from '../api/data';
-import { IProduct } from "@/pages/api/interface";
+import { IOrder, IProduct } from "@/pages/api/interface";
 
 interface Props {
     prod: IProduct;
     isOpen: boolean;
     setModalOpen: Function;
+    order: IOrder;
+    setOrder: Function;
 }
-export default function ProductDetail({ prod, isOpen, setModalOpen }: Props) {
+export default function ProductDetail({ prod, isOpen, setModalOpen, order, setOrder }: Props) {
     const [product, setProduct] = useState<IProduct>(prod)
     const [countProduct, setCountProduct] = useState(0)
-    const { query } = useRouter()
 
     function handleMinusProduct(id: number, price: number) {
         if (countProduct === 0) {
@@ -49,8 +48,18 @@ export default function ProductDetail({ prod, isOpen, setModalOpen }: Props) {
         console.log(dataTemp)
     }
 
-    function handleOrder(valueOrder: number) {
-        history.forward()
+    function handleOrder(countProduct: number, valueOrder: number) {
+        const data: IOrder = {
+            id: order.id,
+            amount: order.amount + countProduct,
+            cliente: order.cliente,
+            place: order.place,
+            order: order.order,
+            price: order.price + (countProduct * valueOrder),
+            products: order.products
+        }
+        setOrder(data);
+        setModalOpen(false);
     }
 
     function handleCloseModal() {
@@ -121,7 +130,7 @@ export default function ProductDetail({ prod, isOpen, setModalOpen }: Props) {
             </div>
 
             <div className='flex justify-center items-center space-x-2'>
-                <button onClick={() => handleOrder(countProduct * Number(product?.price))} className='bg-green-800 p-2 w-40 mt-2 h-20 font-semibold items-center text-center rounded-xl text-white hover:bg-green-600'>
+                <button onClick={() => handleOrder(countProduct, product?.price)} className='bg-green-800 p-2 w-40 mt-2 h-20 font-semibold items-center text-center rounded-xl text-white hover:bg-green-600'>
                     INCLUIR NO PEDIDO
                 </button>
 
