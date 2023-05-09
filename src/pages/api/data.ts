@@ -1191,8 +1191,8 @@ export const orders = [
             "ingredients": ["Charcuterie"],
             "time": "10 min"
         }],
-        "amount": 3,
-        "price": 75
+        "amount": 4,
+        "price": 90
     },
     {
         "id": 2,

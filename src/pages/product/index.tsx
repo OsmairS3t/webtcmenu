@@ -29,7 +29,7 @@ export default function ProductDetail({ prod, isOpen, setModalOpen, order, setOr
                 price: price * (countProduct - 1)
             }
             //setOrder(dataTemp)
-            console.log(dataTemp)
+            //console.log(dataTemp)
         }
     }
 
@@ -45,17 +45,43 @@ export default function ProductDetail({ prod, isOpen, setModalOpen, order, setOr
             price: price * (countProduct + 1)
         }
         //setOrder(dataTemp)
-        console.log(dataTemp)
+        //console.log(dataTemp)
     }
 
-    function handleOrder(countProduct: number, valueOrder: number) {
+    function handleOrder(countProduct: number, valueOrder: number, id: number) {
+        var newPriceOrder
+        var newAmountOrder
+        if (order.price) {
+            //console.log('Tem preço')
+            newPriceOrder = order.price
+            newAmountOrder = order.amount
+            const findProducts = order.products.filter(item => item.id === id)
+            if (findProducts.length > 0) {
+                //console.log('Tem pelo menos um produto encontrado')
+                if (findProducts.length < countProduct) {
+                    newPriceOrder = order.price + ((countProduct - findProducts.length) * findProducts[0].price)
+                    newAmountOrder = order.amount + (countProduct - findProducts.length)
+                }
+                if (findProducts.length > countProduct) {
+                    newPriceOrder = order.price - ((findProducts.length - countProduct) * findProducts[0].price)
+                    newAmountOrder = order.amount - (findProducts.length - countProduct)
+                }
+            } else {
+                //console.log('Não tem produto encontrado')
+                newPriceOrder = order.price + valueOrder
+                newAmountOrder = order.amount + countProduct
+            }
+        } else {
+            newPriceOrder = valueOrder
+            newAmountOrder = countProduct
+        }
         const data: IOrder = {
             id: order.id,
-            amount: order.amount + countProduct,
+            amount: newAmountOrder,
             cliente: order.cliente,
             place: order.place,
             order: order.order,
-            price: order.price + (countProduct * valueOrder),
+            price: newPriceOrder,
             products: order.products
         }
         setOrder(data);
@@ -67,6 +93,11 @@ export default function ProductDetail({ prod, isOpen, setModalOpen, order, setOr
     }
 
     useEffect(() => {
+        const orderProduct = order.products.filter(item => item.id === prod.id)
+        if (orderProduct) {
+            setCountProduct(orderProduct.length)
+        }
+
         const data = products.find(item => item.id === Number(prod.id))
         setProduct(data ?? {
             category_id: 0,
@@ -126,12 +157,12 @@ export default function ProductDetail({ prod, isOpen, setModalOpen, order, setOr
                 Total do Produto: {Intl.NumberFormat('pt-BR', {
                     style: 'currency',
                     currency: 'BRL',
-                }).format(countProduct * Number(product?.price))}
+                }).format(countProduct * Number(product.price))}
             </div>
 
             <div className='flex justify-center items-center space-x-2'>
-                <button onClick={() => handleOrder(countProduct, product?.price)} className='bg-green-800 p-2 w-40 mt-2 h-20 font-semibold items-center text-center rounded-xl text-white hover:bg-green-600'>
-                    INCLUIR NO PEDIDO
+                <button onClick={() => handleOrder(countProduct, product.price, product.id)} className='bg-green-800 p-2 w-40 mt-2 h-20 font-semibold items-center text-center rounded-xl text-white hover:bg-green-600'>
+                    ATUALIZAR PEDIDO
                 </button>
 
                 <button onClick={handleCloseModal} className='bg-red-950 p-2 w-40 mt-3 h-20 font-semibold items-center text-center rounded-xl text-white hover:bg-red-800'>

@@ -10,7 +10,7 @@ import { IOrder, IProduct } from './api/interface';
 import ProductDetail from './product';
 import OrderDetail from './order';
 
-const orderNumber = 3;
+const orderNumber = 1;
 
 export default function Home() {
   const [category, setCategory] = useState(1);
@@ -158,7 +158,7 @@ export default function Home() {
         </div>
       </section>
 
-      <Modal isOpen={isModalOpenProduct} className='flex w-screen justify-center items-center mt-24'>
+      <Modal isOpen={isModalOpenProduct} className='flex w-screen justify-center items-center mt-24' ariaHideApp={false}>
         <ProductDetail
           prod={prod}
           isOpen={isModalOpenProduct}
@@ -168,7 +168,7 @@ export default function Home() {
         />
       </Modal>
 
-      <Modal isOpen={isModalOpenOrder} className='flex w-screen justify-center items-center'>
+      <Modal isOpen={isModalOpenOrder} className='flex w-screen justify-center items-center' ariaHideApp={false}>
         <OrderDetail ord={order} isOpen={isModalOpenOrder} setModalOpen={setIsModalOpenOrder} />
       </Modal>
     </main >
